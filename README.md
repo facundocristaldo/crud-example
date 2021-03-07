@@ -4,7 +4,7 @@ This is a CRUD example storing data in redux store.
 
 ## Package needed
 
-`npm i redux react-redux redux-thunk redux-devtools-extension @material-ui/core @material-ui/icons`
+`npm i redux react-redux redux-thunk redux-devtools-extension @material-ui/core @material-ui/icons uuid`
 
 ## Fonts needed
 
