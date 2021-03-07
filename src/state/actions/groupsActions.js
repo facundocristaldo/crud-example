@@ -3,7 +3,7 @@ import {
     REMOVE_GROUP,
     ADD_VALUE_TO_GROUP,
     REMOVE_VALUE_FROM_GROUP,
-    UPDATE_VALUE_FROM_GROUP,
+    UPDATE_VALUE_FROM_GROUP
 } from '../actions/actionTypes';
 
 export const addGroup = (name = "") => {
@@ -37,6 +37,16 @@ export const removeValueFromGroup = (groupId = "", valueId = "") => {
         payload: {
             groupId,
             valueId
+        }
+    }
+}
+export const updateValueFromGroup = (groupId = "", valueId = "", value = "") => {
+    return {
+        type: UPDATE_VALUE_FROM_GROUP,
+        payload: {
+            groupId,
+            valueId,
+            value
         }
     }
 }

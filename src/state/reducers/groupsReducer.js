@@ -3,7 +3,8 @@ import {
     ADD_GROUP,
     REMOVE_GROUP,
     ADD_VALUE_TO_GROUP,
-    REMOVE_VALUE_FROM_GROUP
+    REMOVE_VALUE_FROM_GROUP,
+    UPDATE_VALUE_FROM_GROUP
 } from '../actions/actionTypes';
 
 
@@ -18,30 +19,46 @@ const groupsReducer = (state = { groups: [] }, action) => {
                 groups: [...state.groups, { id: uuidv4(), name: action.payload.name, values: [] }]
             }
         case REMOVE_GROUP:
+            newGroups = [...state.groups.filter(group => group.id !== action.payload.id)]
+            console.log(newGroups)
             return {
-                ...state,
-                groups: [...state.groups.filter(group => group.id !== action.payload.id)]
+                groups: newGroups
             }
         case ADD_VALUE_TO_GROUP:
+
             groupIndex = state.groups.findIndex((group) => group.id === action.payload.groupId)
             newGroups = [...state.groups]
             group = newGroups[groupIndex]
-            console.log(ADD_VALUE_TO_GROUP, 'group:', group)
             if (group) {
-                group.push({ id: uuidv4(), name: action.payload.value })
+                group.values.push({ id: uuidv4(), value: action.payload.value })
                 return {
                     ...state,
                     groups: newGroups
                 }
             }
             return state;
+
         case REMOVE_VALUE_FROM_GROUP:
+
             groupIndex = state.groups.findIndex((group) => group.id === action.payload.groupId)
             newGroups = [...state.groups]
             group = newGroups[groupIndex]
-            console.log(REMOVE_VALUE_FROM_GROUP, 'group:', group)
             if (group) {
                 group.values = [...group.values.filter(value => value.id !== action.payload.valueId)]
+                return {
+                    ...state,
+                    groups: newGroups
+                }
+            }
+            return state;
+        case UPDATE_VALUE_FROM_GROUP:
+            groupIndex = state.groups.findIndex((group) => group.id === action.payload.groupId)
+            newGroups = [...state.groups]
+            group = newGroups[groupIndex]
+            if (group) {
+                let valueIndex = group.values.findIndex(value => value.id === action.payload.valueId)
+                const value = group.values[valueIndex]
+                value.value = action.payload.value
                 return {
                     ...state,
                     groups: newGroups
